@@ -228,6 +228,7 @@ def store_images(g_id):
 				cv2.imshow("Thesholded", thresholded)
 				# display the frame with segmented hand
 				cv2.rectangle(clone, (left, top), (right, bottom), (0,255,0), 2)
+				cv2.putText(clone, str(pic_no), (30, 400), cv2.FONT_HERSHEY_TRIPLEX, 1.5, (200, 127, 255))
 				cv2.imshow("Video Feed", clone)
 				save_img = thresholded
 				cv2.putText(clone, "Capturing...", (30, 60), cv2.FONT_HERSHEY_TRIPLEX, 2, (127, 255, 255))
