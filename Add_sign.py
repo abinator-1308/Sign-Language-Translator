@@ -156,7 +156,7 @@ def store_images(g_id):
 	# region of interest (ROI) coordinates
 	top, right, bottom, left = 10, 350, 225, 590
 	create_folder("gestures/"+str(g_id))
-	pic_no = 0
+	pic_no = -50
 	flag_start_capturing = False
 	frames = 0
 
@@ -227,6 +227,7 @@ def store_images(g_id):
 				# show the thresholded image
 				cv2.imshow("Thesholded", thresholded)
 				# display the frame with segmented hand
+				cv2.rectangle(clone, (left, top), (right, bottom), (0,255,0), 2)
 				cv2.imshow("Video Feed", clone)
 				save_img = thresholded
 				cv2.putText(clone, "Capturing...", (30, 60), cv2.FONT_HERSHEY_TRIPLEX, 2, (127, 255, 255))
@@ -238,12 +239,14 @@ def store_images(g_id):
 					else:
 						flag_start_capturing = False
 						frames = 0
-				
+				if pic_no == 0:
+					
+					input('Press Enter to start')
 				pic_no += 1
 				if pic_no == total_pics:
 					break
 		# draw the segmented hand
-		cv2.rectangle(clone, (left, top), (right, bottom), (0,255,0), 2)
+		
 
 		# increment the number of frames
 		num_frames += 1
