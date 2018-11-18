@@ -190,14 +190,17 @@ def store_images(g_id):
 		gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
 		gray = cv2.GaussianBlur(gray, (7, 7), 0)
 
+
 		# to get the background, keep looking till a threshold is reached
 		# so that our weighted average model gets calibrated
+		#input('Press Enter to continue')
 		if num_frames < 30:
 			run_avg(gray, accumWeight)
 			if num_frames == 1:
 				print("[STATUS] please wait! calibrating...")
 			elif num_frames == 29:
 				print("[STATUS] Successfull...")
+			#input('Press Enter to continue')
 		else:
 			# segment the hand region
 			hand = segment(gray)
@@ -228,10 +231,17 @@ def store_images(g_id):
 				save_img = thresholded
 				cv2.putText(clone, "Capturing...", (30, 60), cv2.FONT_HERSHEY_TRIPLEX, 2, (127, 255, 255))
 				cv2.imwrite("gestures/"+str(g_id)+"/"+str(pic_no)+".jpg", save_img)
+				keypress = cv2.waitKey(1)
+				if keypress == ord('c'):
+					if flag_start_capturing == False:
+						flag_start_capturing = True
+					else:
+						flag_start_capturing = False
+						frames = 0
+				
 				pic_no += 1
 				if pic_no == total_pics:
 					break
-				
 		# draw the segmented hand
 		cv2.rectangle(clone, (left, top), (right, bottom), (0,255,0), 2)
 
